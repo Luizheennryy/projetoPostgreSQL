@@ -19,7 +19,7 @@ def deletar_periodo(nome_tabela, periodo):
                 print(f"📝 Executando DELETE: {delete_query} | Valores: ({periodo},)")
 
                 cur.execute(delete_query, (periodo,))
-                deleted_rows = cur.rowcount
+                deleted_rows = cur.rowcount if isinstance(cur.rowcount, int) else 0
                 print(f"⚠️ Teste: Quantidade de registros deletados: {deleted_rows}")
 
                 conn.commit()

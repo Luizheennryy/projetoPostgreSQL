@@ -14,7 +14,7 @@ class TestDeleteData(unittest.TestCase):
         mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
         mock_get_connection.return_value = mock_conn
 
-        deletar_periodo(["Fato_UR"], "2025-03")
+        deletar_periodo("Fato_UR", "2025-03")
 
         mock_cursor.execute.assert_called()
         print("✅ Teste de DELETE com muitas linhas passou!")

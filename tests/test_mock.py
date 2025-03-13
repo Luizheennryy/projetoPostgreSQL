@@ -15,7 +15,7 @@ class TestDeleteData(unittest.TestCase):
         mock_get_connection.return_value = mock_conn
 
         # Executando a função de delete
-        deletar_periodo(["Fato_UR"], "2025-03")
+        deletar_periodo("Fato_UR", "2025-03")
 
         # Testando se o cursor.execute foi chamado
         self.assertTrue(mock_cursor.execute.called, "O método execute() não foi chamado!")

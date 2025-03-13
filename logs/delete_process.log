@@ -38,3 +38,13 @@ LINE 1: DELETE FROM Fato_UR WHERE ano_mes = '2025-03' RETURNING *;
 2025-03-13 14:55:20,559 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 0
 2025-03-13 14:56:42,629 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 1
 2025-03-13 14:58:46,023 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 3
+2025-03-13 15:16:47,706 - INFO - ✅ DELETE executado com sucesso - Tabela: ['Fato_UR'] | Período: 2025-03 | Registros removidos: <MagicMock name='get_connection().__enter__().cursor().__enter__().rowcount' id='1792307550864'>
+2025-03-13 15:16:47,707 - ERROR - ❌ ERRO ao deletar da tabela ['Fato_UR']: '>' not supported between instances of 'MagicMock' and 'int'
+2025-03-13 15:16:47,716 - INFO - ✅ DELETE executado com sucesso - Tabela: ['Fato_UR'] | Período: 2099-12 | Registros removidos: <MagicMock name='get_connection().__enter__().cursor().__enter__().rowcount' id='1792307558256'>
+2025-03-13 15:16:47,716 - ERROR - ❌ ERRO ao deletar da tabela ['Fato_UR']: '>' not supported between instances of 'MagicMock' and 'int'
+2025-03-13 15:16:47,946 - INFO - ✅ DELETE executado com sucesso - Tabela: ['Fato_UR'] | Período: 2025-03 | Registros removidos: <MagicMock name='get_connection().__enter__().cursor().__enter__().rowcount' id='1792311760208'>
+2025-03-13 15:16:47,947 - ERROR - ❌ ERRO ao deletar da tabela ['Fato_UR']: '>' not supported between instances of 'MagicMock' and 'int'
+2025-03-13 15:16:48,068 - ERROR - ❌ ERRO ao deletar da tabela ['Fato_UR']: ERRO:  não existe a relação "['Fato_UR']"
+LINE 1: DELETE FROM "['Fato_UR']" WHERE ano_mes = '2025-03' RETURNIN...
+                    ^
+
