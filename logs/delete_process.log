@@ -31,3 +31,10 @@
 2025-03-12 21:28:29,163 - INFO - Processando DELETE para a tabela: Fato_UR
 2025-03-12 21:28:29,168 - INFO - \u2705 Backup realizado para a tabela Fato_UR - Per�odo: 2025-03
 2025-03-12 21:28:29,168 - INFO - Linhas removidas com sucesso para o per�odo 2025-03!
+2025-03-13 14:49:04,467 - ERROR - ❌ ERRO ao deletar da tabela Fato_UR: ERRO:  não existe a relação "fato_ur"
+LINE 1: DELETE FROM Fato_UR WHERE ano_mes = '2025-03' RETURNING *;
+                    ^
+
+2025-03-13 14:55:20,559 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 0
+2025-03-13 14:56:42,629 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 1
+2025-03-13 14:58:46,023 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 3
