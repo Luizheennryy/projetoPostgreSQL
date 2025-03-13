@@ -1,0 +1,52 @@
+name: Executar Testes Automatizados
+
+on:
+  push:
+    branches:
+      - main
+      - dev  # Ajuste conforme seu fluxo
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: projetos_test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: 22
+        ports:
+          - "5433:5432"
+        options: >-
+          --health-cmd "pg_isready -U postgres -d projetos_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - name: Clonar repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependências
+        run: |
+          python -m venv .venv
+          source .venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Criar banco de testes
+        run: |
+          source .venv/bin/activate
+          TEST_MODE=True python -m scripts.setup_test_db
+
+      - name: Executar testes
+        run: |
+          source .venv/bin/activate
+          TEST_MODE=True python -m unittest discover -s tests
