@@ -27,3 +27,21 @@ def setup_database():
 
 if __name__ == "__main__":
     setup_database()
+
+def criar_tabelas_teste():
+    with PostgreSQL.get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS fato_gross_up (
+                    id SERIAL PRIMARY KEY,
+                    ano_mes TEXT NOT NULL,
+                    valor NUMERIC
+                );
+            """)
+            conn.commit()
+            print("✅ Tabela fato_gross_up criada com sucesso no banco de testes!")
+
+if __name__ == "__main__":
+    print("🔍 Configurando o banco de testes...")
+    criar_tabelas_teste()
+    print("✅ Banco de testes configurado!")

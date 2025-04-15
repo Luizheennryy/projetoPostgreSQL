@@ -85,3 +85,13 @@ LINE 1: DELETE FROM "['Fato_UR']" WHERE ano_mes = '2025-03' RETURNIN...
 2025-03-13 15:31:32,253 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 0
 2025-03-13 15:31:32,357 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 0
 2025-03-13 15:31:32,461 - INFO - ✅ DELETE executado com sucesso - Tabela: Fato_UR | Período: 2025-03 | Registros removidos: 0
+2025-03-13 21:50:18,778 - ERROR - ❌ ERRO ao deletar da tabela fato_gross_up: ERRO:  não existe a relação "fato_gross_up"
+LINE 1: DELETE FROM "fato_gross_up" WHERE ano_mes = '2025-03' RETURN...
+                    ^
+
+2025-03-13 21:52:58,161 - ERROR - ❌ ERRO ao deletar da tabela fato_gross_up: ERRO:  não existe a relação "fato_gross_up"
+LINE 1: DELETE FROM "fato_gross_up" WHERE ano_mes = '2025-03' RETURN...
+                    ^
+
+2025-03-13 21:54:11,242 - INFO - ✅ DELETE executado com sucesso - Tabela: fato_gross_up | Período: 2025-03 | Registros removidos: 0
+2025-03-13 21:56:03,228 - INFO - ✅ DELETE executado com sucesso - Tabela: fato_gross_up | Período: 2025-03 | Registros removidos: 2

@@ -1,79 +1,18 @@
-import sys
-import os
-
-sys.path.append(os.path.abspath(os.path.dirname(__file__) + "/.."))
-
-from db import PostgreSQL
+from database.queries import execute_query
 from utils.logger import delete_logger
 
 def deletar_periodo(nome_tabela, periodo):
     """Deleta registros e registra auditoria"""
-
-    # 🔹 Garante que o nome da tabela é string
-    if isinstance(nome_tabela, list):
-        nome_tabela = nome_tabela[0]  # Pega o primeiro item da lista, caso seja uma lista
-    
-    print(f"⚠️ DEBUG: Nome da tabela recebido = {nome_tabela} | Tipo: {type(nome_tabela)}")
     print(f"🔍 Iniciando DELETE para {nome_tabela} | Período: {periodo}")
 
-    conn = None  # 🔹 Garantir que conn está definido para uso no finally
-    try:
-        conn = PostgreSQL.get_connection()
-        print(f"✅ Conexão com o banco estabelecida para {nome_tabela}")
-
-        with conn.cursor() as cur:
-            print('🚀 Iniciando a execução do script delete_data.py')
-            delete_query = f'DELETE FROM "{nome_tabela}" WHERE ano_mes = %s RETURNING *;'
-            print(f"📝 Executando DELETE: {delete_query} | Valores: ({periodo},)")
-
-            cur.execute(delete_query, (periodo,))
-            deleted_rows = int(cur.rowcount) if cur.rowcount else 0
-            print(f"⚠️ Teste: Quantidade de registros deletados: {deleted_rows}")
-
-            conn.commit()
-            print("✅ DELETE executado com sucesso!")
-
-            delete_logger.info(f"✅ DELETE executado com sucesso - Tabela: {nome_tabela} | Período: {periodo} | Registros removidos: {deleted_rows}")
-
-            if deleted_rows > 0:
-                print(f"🔍 Chamando auditoria: DELETE {deleted_rows} registros de {nome_tabela}")
-                registrar_auditoria("DELETE", nome_tabela, deleted_rows)
-                print("✅ Finalizou chamada da auditoria")
-            else:
-                print("⚠️ Nenhuma linha foi deletada, auditoria não chamada!")
-
-    except Exception as e:
-        if conn:
-            conn.rollback()
-        print(f"❌ ERRO ao deletar da tabela {nome_tabela}: {e}")
-        delete_logger.error(f"❌ ERRO ao deletar da tabela {nome_tabela}: {e}")
-        raise
-    finally:
-        if conn:
-            conn.close()  # ✅ Garante que a conexão será fechada sempre
-
-def registrar_auditoria(operacao, nome_tabela, registros_afetados):
-    """Insere um registro de auditoria no banco"""
-    try:
-        print(f"🔍 Registrando auditoria: {operacao} | Tabela: {nome_tabela} | Registros: {registros_afetados}")
-        
-        with PostgreSQL.get_connection() as conn:
-            with conn.cursor() as cur:
-                query = """
-                    INSERT INTO log_auditoria (operacao, tabela_afetada, registros_afetados)
-                    VALUES (%s, %s, %s);
-                """
-                print(f"📝 Executando SQL: {query} | Valores: ({operacao}, {nome_tabela}, {registros_afetados})")
-
-                cur.execute(query, (operacao, nome_tabela, registros_afetados))
-                
-                conn.commit()  # 🔥 Forçando o commit
-                print("✅ Auditoria registrada com sucesso!")
-
-    except Exception as e:
-        delete_logger.error(f"❌ ERRO ao registrar auditoria: {e}")
-        print(f"❌ ERRO ao registrar auditoria: {e}")
-
-if __name__ == "__main__":
-    print("🚀 Iniciando a execução do script delete_data.py")
-    deletar_periodo("Fato_UR", "2025-03")  # Teste com uma tabela de exemplo
+    delete_query = f'DELETE FROM "{nome_tabela}" WHERE ano_mes = %s RETURNING *;'
+    deleted_rows = execute_query(delete_query, (periodo,))
+    
+    print(f"⚠️ Teste: Quantidade de registros deletados: {deleted_rows}")
+    
+    if deleted_rows > 0:
+        print(f"🔍 Chamando auditoria: DELETE {deleted_rows} registros de {nome_tabela}")
+        registrar_auditoria("DELETE", nome_tabela, deleted_rows)
+        print("✅ Finalizou chamada da auditoria")
+    else:
+        print("⚠️ Nenhuma linha foi deletada, auditoria não chamada!")
