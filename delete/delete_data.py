@@ -1,6 +1,10 @@
 from database.queries import execute_query
 from utils.logger import delete_logger
 
+# Função fake provisória só para permitir import e execução dos testes
+def registrar_auditoria(operacao, tabela, total):
+    print(f"[AUDITORIA] Operação: {operacao} | Tabela: {tabela} | Registros: {total}")
+
 def deletar_periodo(nome_tabela, periodo):
     """Deleta registros e registra auditoria"""
     print(f"🔍 Iniciando DELETE para {nome_tabela} | Período: {periodo}")

@@ -1,33 +1,25 @@
 import os
-import psycopg2
 from dotenv import load_dotenv
-from utils.logger import setup_logger
-
-# 🔍 Forçar a leitura correta do .env
-if os.getenv("TEST_MODE") == "True":
-    print("🔍 MODO TESTE ATIVADO: Carregando .env.test")
-    load_dotenv(dotenv_path=".env.test", override=True)  # 🔹 Agora forçamos o override!
-else:
-    load_dotenv(dotenv_path=".env", override=True)
-
-# Configuração do Logger
-logger = setup_logger("db_logger", "logs/db.log")
+import psycopg2
 
 class PostgreSQL:
     @staticmethod
     def get_connection():
-        """Cria uma conexão com o banco correto"""
-        try:
-            database_name = os.getenv("DATABASE")  # Pegar o nome correto
-            conn = psycopg2.connect(
-                host=os.getenv("HOST"),
-                port=os.getenv("PORT"),
-                user=os.getenv("USER"),
-                password=os.getenv("PASSWD"),
-                database=database_name
-            )
-            print(f"✅ Conectado ao banco: {database_name}")  # 🔹 Confirmação no terminal
-            return conn
-        except psycopg2.Error as e:
-            logger.error(f"Erro ao conectar ao PostgreSQL: {e}")
-            raise
+        # Carrega o .env.test se TEST_MODE estiver ativo
+        if os.getenv("TEST_MODE") == "True":
+            load_dotenv(dotenv_path=".env.test", override=True)
+            print(f"🔎 DB_HOST: {os.getenv('DB_HOST')}")
+            print(f"🔎 DB_PORT: {os.getenv('DB_PORT')}")
+            print(f"🔎 DB_USER: {os.getenv('DB_USER')}")
+            print(f"🔎 DB_PASSWORD: {os.getenv('DB_PASSWORD')}")
+            print(f"🔎 DB_NAME: {os.getenv('DB_NAME')}")
+        else:
+            load_dotenv(dotenv_path=".env", override=True)
+        conn = psycopg2.connect(
+            host=os.getenv("DB_HOST"),
+            port=int(os.getenv("DB_PORT")),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME")
+        )
+        return conn

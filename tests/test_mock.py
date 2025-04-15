@@ -1,24 +1,20 @@
 import unittest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 from delete.delete_data import deletar_periodo
 
 class TestDeleteData(unittest.TestCase):
 
-    @patch('db.PostgreSQL.get_connection')
-    def test_delete(self, mock_get_connection):
+    @patch('delete.delete_data.registrar_auditoria')
+    @patch('delete.delete_data.execute_query')
+    def test_delete(self, mock_execute_query, mock_auditoria):
         """Testa se o DELETE está sendo chamado corretamente"""
-        
-        # Criando um mock da conexão e do cursor
-        mock_conn = MagicMock()
-        mock_cursor = MagicMock()
-        mock_conn.cursor.return_value.__enter__.return_value = mock_cursor
-        mock_get_connection.return_value = mock_conn
+        mock_execute_query.return_value = 5
 
-        # Executando a função de delete
         deletar_periodo("Fato_UR", "2025-03")
 
-        # Testando se o cursor.execute foi chamado
-        self.assertTrue(mock_cursor.execute.called, "O método execute() não foi chamado!")
+        mock_execute_query.assert_called_once()
+        mock_auditoria.assert_called_once_with("DELETE", "Fato_UR", 5)
+        print("✅ Teste de chamada de DELETE com auditoria passou!")
 
 if __name__ == '__main__':
     unittest.main()

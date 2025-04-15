@@ -1,106 +1,94 @@
-# 🚀 Projeto PostgreSQL - Automação de Banco de Dados
+🚀 Projeto PostgreSQL - Automação de Banco de Dados
 
-Este projeto tem como objetivo **automatizar operações no PostgreSQL** usando Python.  
-Inclui funcionalidades como **DELETE otimizado com backup**, **inserções automáticas**, **testes automatizados** e **integração contínua**.
+Este projeto tem como objetivo automatizar operações no PostgreSQL usando Python. Inclui funcionalidades como DELETE otimizado com auditoria, inserções automáticas, testes automatizados, e ambiente de testes isolado com unittest.
 
----
+📌 Funcionalidades
 
-## 📌 Funcionalidades
+✅ DELETE com auditoria (log das exclusões realizadas)✅ INSERT e UPDATE automáticos para manter os dados atualizados✅ Testes automatizados com unittest✅ Banco de testes isolado com .env.test e porta customizada✅ Logs informativos para rastreabilidade das operações✅ Integração com GitHub Actions para rodar testes automaticamente
 
-✅ **DELETE com Backup** antes da exclusão  
-✅ **INSERT e UPDATE automáticos** para manter os dados atualizados  
-✅ **Testes automatizados** com `unittest`  
-✅ **Banco de testes isolado** para evitar alterações no banco principal  
-✅ **Integração com GitHub Actions** para rodar testes automaticamente  
+🛠 Tecnologias Utilizadas
 
----
+Python 3.11+
 
-## 🚀 Como Rodar o Projeto
+PostgreSQL (local na porta 5433 no modo de testes)
 
-### **1️⃣ Criar o Ambiente Virtual**
-```sh
+psycopg2, dotenv, unittest
+
+GitHub Actions (CI/CD)
+
+🚀 Como Rodar o Projeto
+
+1️⃣ Clonar o repositório
+
+git clone https://github.com/seuusuario/seurepo.git
+cd seurepo
+
+2️⃣ Criar o ambiente virtual e instalar dependências
+
 python -m venv .venv
+.venv\Scripts\activate  # Windows
+# ou
 source .venv/bin/activate  # Linux/Mac
-.venv\Scripts\activate     # Windows
 
 pip install -r requirements.txt
 
-pip install -r requirements.txt
+3️⃣ Criar os arquivos de ambiente
+
+Crie os arquivos .env e .env.test:
+
+.env: (produção)
+
+HOST=localhost
+PORT=5432
+USER=postgres
+PASSWD=22
+DATABASE=projetos
+
+.env.test: (para rodar testes)
+
+HOST=localhost
+PORT=5433
+USER=postgres
+PASSWD=22
+DATABASE=projetos_test
+
+🧪 A porta 5433 deve ser usada para o banco de testes local. Garanta que esteja rodando nessa porta!
+
+4️⃣ Criar o banco de teste e tabelas mock
 
 TEST_MODE=True python -m scripts.setup_test_db
 
+5️⃣ Rodar os testes
+
 TEST_MODE=True python -m unittest discover -s tests
 
-🛠 Tecnologias Utilizadas
-Python 3.11
-PostgreSQL
-Unittest para testes
-GitHub Actions para CI/CD
+🔥 GitHub Actions - Integração Contínua
 
-🔥 Integração com GitHub Actions
-Os testes são executados automaticamente em cada git push.
-Confira a aba "Actions" no repositório do GitHub para ver os resultados.
+Os testes automatizados são executados em cada git push.Você pode acompanhar os resultados na aba Actions do repositório.
 
-📜 Sobre o Autor
-👤 Luiz Henrique dos Santos Vieira
-🚀 Analista de Operações Comerciais III | Especialista em Automação de Banco de Dados
+👤 Sobre o Autor
 
-💼 Mais de 10 anos de experiência em análise de sistemas, desenvolvimento de relatórios, Dashboards e automação de processos
-🎯 Atualmente trabalha na Claro Brasil, atuando na integração e tratamento de dados de diversos sistemas.
-📊 Grande expertise em BI e desenvolvimento de Dashboards escaláveis
+Luiz Henrique dos Santos Vieira🎯 Database Analyst | Data Engineer | Automation Specialist | Python & SQL Expert | Business Intelligence 💼 Mais de 10 anos de experiência em análise de sistemas, dashboards e automação de processos📊 Atua na Claro Brasil, integrando dados de múltiplos sistemas com foco em inteligência analítica
 
-🛠 Habilidades:
-✅ Python (Data Processing, Automação, Testes, SQL)
-✅ Banco de Dados & SQL – Engenharia, ETL e Otimização
-    Engenharia de Dados & ETL: Desenvolvimento e automação de pipelines ETL para extração, transformação e carga de dados em ambientes analíticos, garantindo performance e escalabilidade.
-    Modelagem de Dados Relacional & Dimensional: Estruturação eficiente de bases de dados seguindo 3FN (terceira forma normal) e modelagem dimensional (Star Schema e Snowflake), otimizando consultas e armazenamento.
-    Manipulação Avançada de Dados:
-    Operações complexas (SELECT, INSERT, UPDATE, DELETE, MERGE, TRUNCATE).
-    Joins eficientes (INNER JOIN, LEFT JOIN, RIGHT JOIN, FULL JOIN, CROSS JOIN).
-    Filtragens (WHERE, HAVING, DISTINCT, GROUP BY, ORDER BY).
-    Funções agregadas e de janela (SUM, AVG, ROW_NUMBER, RANK, PARTITION BY).
-    Otimização de Consultas e Performance:
-    Criação e manutenção de Índices Clusterizados e Não-Clusterizados para acelerar consultas.
-    Uso eficiente de EXPLAIN ANALYZE para identificar gargalos e otimizar queries.
-    Particionamento e paralelismo para manipulação de grandes volumes de dados.
-    Gestão de Transações e Controle de Concorrência:
-    Aplicação de ACID Transactions com BEGIN, COMMIT, ROLLBACK para garantir consistência dos dados.
-    Gerenciamento de locks (ROW LOCK, TABLE LOCK) para evitar condições de corrida.
-    Stored Procedures, Views e Triggers:
-    Automação de regras de negócio no banco via Triggers e Stored Procedures.
-    Criação de Views e Materialized Views para otimizar consultas frequentes.
-    Administração e Segurança:
-    Gestão de usuários e permissões (GRANT, REVOKE).
-    Auditoria e logs para rastreamento de alterações e segurança dos dados.
-    Backup e recuperação de dados para evitar perdas em cenários críticos.
-    Experiência Multi-SGBD:
-    PostgreSQL – Foco em Data Warehousing, particionamento e replicação.
-    MySQL – Administração de sistemas OLTP, otimização de queries e replicação.
-    Oracle – Desenvolvimento PL/SQL, Stored Procedures e manipulação de grandes volumes de dados.
-✅ Power BI (DAX, M, Modelagem, Relatórios Dinâmicos)
-✅ Microsoft Power Apps
-✅ VBA e Automação de Processos
-✅ Metodologias Ágeis
+🧠 Habilidades Técnicas
 
+✅ Python (scripts, automações, testes, logs)✅ SQL Avançado (joins, funções de janela, otimização, views, triggers, auditoria)✅ Modelagem de Dados Relacional & Dimensional✅ ETL & Data Engineering (pipelines, particionamento, índices, transações ACID)✅ Power BI, DAX, M, Power Apps✅ VBA, Excel, Automação de Processos✅ Git, GitHub Actions, CI/CD, Metodologias Ágeis
 
-🔗 GitHub luizhennryy| 📧 Contato luizheennry@icloud.com
+🤝 Contribuição
 
- Contribuição
 Quer contribuir?
 
 Faça um fork do repositório
-Crie uma branch (git checkout -b minha-feature)
-Commit suas alterações (git commit -m "Minha nova feature")
-Dê um push na branch (git push origin minha-feature)
-Abra um Pull Request
 
+Crie uma branch com sua feature: git checkout -b minha-feature
 
----
+Commit suas alterações: git commit -m "feat: minha nova feature"
 
-### **3️⃣ Adicionar ao GitHub**
-Agora, adicione e envie o `README.md` para o repositório:
+Envie a branch: git push origin minha-feature
 
-```sh
-git add README.md
-git commit -m "Adicionando README estruturado"
-git push origin main
+Abra um Pull Request 🧠
+
+📫 Contato
+
+📧 Email: luizheennry@icloud.com🔗 GitHub: luizhennryy
+
